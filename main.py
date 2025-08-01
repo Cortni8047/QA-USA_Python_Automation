@@ -1,16 +1,43 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+import data
+import helpers
+class TestUrbanRoutes:
+    @classmethod
+    def setup_class(cls):
+        if helpers.is_url_reachable(data.URBAN_ROUTES_URL):
+            print("Connected to the Urban Routes server")
+        else:
+            print("Cannot connect to Urban Routes. Check the server is on and still running")
+    def test_set_route(self):
+        # Add in S8
+        print("function created for set route")
+        pass
+    def test_select_plan(self):
+        # Add in S8
+        print("function created for select plan")
+        pass
+    def test_fill_phone_number(self):
+        # Add in S8
+        print("function created for fill_phone_number")
+        pass
+    def test_fill_card(self):
+        # Add in S8
+        print("function created for fill_card")
+        pass
+    def test_comment_for_driver(self):
+        # Add in S8
+        print("function created for comment_for_driver")
+        pass
+    def test_order_blanket_and_handkerchiefs(self):
+        # Add in S8
+        print("function created for order_blanket_and_handkerchiefs")
+        pass
+    def test_order_2_ice_creams(self):
+        for i in range(2):
+            # Add in S8
+            pass
+        print("function created for order_2_ice_creams")
+        pass
+    def test_car_search_model_appears(self):
+        # Add in S8
+        print("function created for car_search_model_appears")
+        pass
