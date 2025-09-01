@@ -1,9 +1,17 @@
 import data
 import helpers
+from selenium import webdriver
 class TestUrbanRoutes:
     @classmethod
     def setup_class(cls):
-        if helpers.is_url_reachable(data.URBAN_ROUTES_URL):
+        # do not modify - we need additional logging enabled in order to retrieve phone confirmation code
+        from selenium.webdriver import DesiredCapabilities
+        capabilities = DesiredCapabilities.CHROME
+        capabilities["goog:loggingPrefs"] = {'performance': 'ALL'}
+        cls.driver = webdriver.Chrome()
+
+        if helpers.is_url_reachable(data.urban_routes_url):
+            cls.driver.get(data.urban_routes_url)
             print("Connected to the Urban Routes server")
         else:
             print("Cannot connect to Urban Routes. Check the server is on and still running")
@@ -41,3 +49,6 @@ class TestUrbanRoutes:
         # Add in S8
         print("function created for car_search_model_appears")
         pass
+    @classmethod
+    def teardown_class(cls):
+        cls.driver.quit()
