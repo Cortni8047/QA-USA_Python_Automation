@@ -6,7 +6,13 @@ class UrbanRoutesPage:
     def __init__(self, driver):
         self.driver = driver
 
+    def set_route(self, from_address, to_address):
+        self.set_from(from_address)
+        self.set_to(to_address)
+
+
     # FOUNDATIONAL LOCATORS (Steps 1-4)
+
     from_field = (By.ID, "from")
     to_field = (By.ID, "to")
     call_taxi_button = (By.CLASS_NAME, "button round")
@@ -48,14 +54,15 @@ class UrbanRoutesPage:
     def click_phone_number_button(self):
         self.driver.find_element(*self.phone_number_button).click()
 
-    def set_phone_number(self, phone_number):
-        self.driver.find_element(*self.phone_number_field).send_keys(phone_number)
 
     def click_next_button(self):
         self.driver.find_element(*self.next_button).click()
 
     def set_confirmation_code(self, code):
         self.driver.find_element(*self.confirmation_code_field).send_keys(code)
+
+    def set_phone_number(self, phone_number):
+        self.driver.find_element(*self.phone_number_field).send_keys(phone_number)
 
     def click_confirm_button(self):
         self.driver.find_element(*self.confirm_button).click()
