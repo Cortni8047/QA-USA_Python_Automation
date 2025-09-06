@@ -6,7 +6,7 @@ from pages import UrbanRoutesPage
 class TestUrbanRoutes:
     @classmethod
     def setup_class(cls):
-
+        # do not modify - we need additional logging enabled in order to retrieve phone confirmation code
         from selenium.webdriver import DesiredCapabilities
         capabilities = DesiredCapabilities.CHROME
         capabilities["goog:loggingPrefs"] = {'performance': 'ALL'}
@@ -94,7 +94,7 @@ class TestUrbanRoutes:
         routes_page.click_supportive_tariff()
         routes_page.click_blanket_and_tissues()
 
-        assert routes_page.get_blanket_checkbox_property('checked') == True
+        assert routes_page.get_blanket_checkbox_property("checked") == True
 
     def test_order_2_ice_creams(self):
         self.driver.get(data.URBAN_ROUTES_URL)
@@ -120,7 +120,7 @@ class TestUrbanRoutes:
 
         routes_page.click_phone_number_button()
         routes_page.phone_number_field()
-        routes_page.retrieve_phone_code()
+        helpers.retrieve_phone_code()
         routes_page.set_phone_number()
         routes_page.click_confirm_button()
         routes_page.set_confirmation_code(phone_code)

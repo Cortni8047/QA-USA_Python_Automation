@@ -1,8 +1,15 @@
+import helpers
+from helpers import  retrieve_phone_code
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
+from data import PHONE_NUMBER
+
+
 class UrbanRoutesPage:
+
     def __init__(self, driver):
         self.driver = driver
 
@@ -18,6 +25,7 @@ class UrbanRoutesPage:
     call_taxi_button = (By.CLASS_NAME, "button round")
     supportive_tariff_button = (By.XPATH, "//div[@class='tcard']")
     supportive_tariff_selected = (By.XPATH, "//div[@class='tcard active']")
+    order_button = (By.XPATH, "//button[contains(text(), 'Order')]")
 
     def set_from(self, from_address):
         self.driver.find_element(*self.from_field).send_keys(from_address)
@@ -37,6 +45,9 @@ class UrbanRoutesPage:
     def click_supportive_tariff(self):
         self.driver.find_element(*self.supportive_tariff_button).click()
 
+    def click_order_button(self):
+        self.driver.find_element(*self.order_button).click()
+
     def is_supportive_tariff_selected(self):
         try:
             self.driver.find_element(*self.supportive_tariff_selected)
@@ -50,6 +61,8 @@ class UrbanRoutesPage:
     next_button = (By.CLASS_NAME, "button full")
     confirmation_code_field = (By.ID, "code")
     confirm_button = (By.XPATH, "//button[contains(text(), 'Confirm')]")
+    retrieve_phone_code_field = (By.ID, "code")
+    car_search_modal = (By.ID, "displayed")
 
     def click_phone_number_button(self):
         self.driver.find_element(*self.phone_number_button).click()
@@ -66,6 +79,18 @@ class UrbanRoutesPage:
 
     def click_confirm_button(self):
         self.driver.find_element(*self.confirm_button).click()
+
+    def get_phone_number(self):
+        return self.driver.find_element(*self.phone_number_field).get_attribute("value")
+
+    def retrieve_phone_code(self):
+        return retrieve_phone_code(self.driver)
+
+    def is_car_search_modal_displayed(self):
+        return self.driver.find_element(*self.car_search_modal).is_displayed()
+
+
+
 
     # PAYMENT METHOD LOCATORS
     payment_method_button = (By.CLASS_NAME, "pp-text")
@@ -94,11 +119,18 @@ class UrbanRoutesPage:
     def close_payment_method_modal(self):
         self.driver.find_element(*self.close_payment_modal).click()
 
+    def get_payment_method_text(self):
+        return self.driver.find_element(*self.payment_method_text).text
+
     # DRIVER COMMENT LOCATORS
     comment_field = (By.ID, "comment")
+    checkbox_field = (By.ID, "checked")
 
     def set_message_for_driver(self, message):
         self.driver.find_element(*self.comment_field).send_keys(message)
+
+    def get_message_for_driver(self):
+        return self.driver.find_element(*self.message_for_driver_field).get_attribute("value")
 
     # Blanket and handkerchiefs locators
     blanket_and_tissues_switch = (By.CLASS_NAME, "switch")
@@ -111,9 +143,14 @@ class UrbanRoutesPage:
     def is_blanket_and_tissues_selected(self):
         return self.driver.find_element(*self.blanket_and_tissues_checkbox).is_selected()
 
+    def get_blanket_checkbox_property(self):
+       return self.driver.find_element(*self.checkbox_field).get_property('checked')
+
+
     # Ice cream locators
     ice_cream_counter_plus = (By.CLASS_NAME, "counter-plus")
     ice_cream_counter_value = (By.CLASS_NAME, "counter-value")
+    ice_cream_plus_button = (By.XPATH, "//div[@class='counter-plus']")
 
     # Ice cream methods
     def click_ice_cream_plus(self):
@@ -121,6 +158,9 @@ class UrbanRoutesPage:
 
     def get_ice_cream_count(self):
         return int(self.driver.find_element(*self.ice_cream_counter_value).text)
+
+    def click_order_ice_cream(self):
+        self.driver.find_element(*self.ice_cream_plus_button).click()
 
     def order_ice_cream(self, quantity):
         current_count = self.get_ice_cream_count()
