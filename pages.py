@@ -9,20 +9,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-from data import PHONE_NUMBER
 
 
 class UrbanRoutesPage:
 
-    def __init__(self, driver):
-        self.driver = driver
-
-    def set_route(self, from_address, to_address):
-        self.set_from(from_address)
-        self.set_to(to_address)
-
-
-    # FOUNDATIONAL LOCATORS (Steps 1-4)
 
     from_field = (By.ID, "from")
     to_field = (By.ID, "to")
@@ -30,6 +20,41 @@ class UrbanRoutesPage:
     supportive_tariff_button = (By.XPATH, "//div[@class='tcard']")
     supportive_tariff_selected = (By.XPATH, "//div[@class='tcard active']")
     order_button = (By.CLASS_NAME, "smart-button-wrapper")
+
+    phone_number_button = (By.CLASS_NAME, "np-text")
+    phone_number_field = (By.ID, "phone")
+    next_button = (By.XPATH, "//button[contains(text(), 'Next')]")
+    confirmation_code_field = (By.ID, "code")
+    confirm_button = (By.XPATH, "//button[contains(text(), 'Confirm')]")
+    retrieve_phone_code_field = (By.ID, "code")
+    car_search_modal = (By.CLASS_NAME, "order-body")
+    phone_code = (By.ID, "code")
+
+    payment_method_button = (By.CLASS_NAME, "pp-text")
+    add_card_button = (By.CLASS_NAME, "pp-plus")
+    card_number_field = (By.ID, "number")
+    card_code_field = (By.CSS_SELECTOR, "#code.card-input")
+    link_button = (By.XPATH, "//button[contains(text(), 'Link')]")
+    payment_method_text = (By.CLASS_NAME, "pp-value-text")
+    close_payment_modal = (By.XPATH, "//button[@class='close-button section-close']")
+
+    comment_field = (By.ID, "comment")
+    checkbox_field = (By.ID, "checked")
+
+    blanket_and_tissues_switch = (By.CLASS_NAME, "switch")
+    blanket_and_tissues_checkbox = (By.CLASS_NAME, "switch-input")
+
+    ice_cream_counter_plus = (By.CLASS_NAME, "counter-plus")
+    ice_cream_counter_value = (By.CLASS_NAME, "counter-value")
+    ice_cream_plus_button = (By.XPATH, "//div[@class='counter-plus']")
+
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    def set_route(self, from_address, to_address):
+        self.set_from(from_address)
+        self.set_to(to_address)
 
     def set_from(self, from_address):
         self.driver.find_element(*self.from_field).send_keys(from_address)
@@ -59,16 +84,6 @@ class UrbanRoutesPage:
             return True
         except:
             return False
-
-    # PHONE NUMBER LOCATORS
-    phone_number_button = (By.CLASS_NAME, "np-text")
-    phone_number_field = (By.ID, "phone")
-    next_button = (By.XPATH, "//button[contains(text(), 'Next')]")
-    confirmation_code_field = (By.ID, "code")
-    confirm_button = (By.XPATH, "//button[contains(text(), 'Confirm')]")
-    retrieve_phone_code_field = (By.ID, "code")
-    car_search_modal = (By.CLASS_NAME, "order-body")
-    phone_code = (By.ID, "code")
 
     def set_full_phone(self, number):
         self.click_phone_number_button()
@@ -104,18 +119,6 @@ class UrbanRoutesPage:
         WebDriverWait(self.driver,3).until(expected_conditions.visibility_of_element_located(self.car_search_modal))
         return self.driver.find_element(*self.car_search_modal).is_displayed()
 
-
-
-
-    # PAYMENT METHOD LOCATORS
-    payment_method_button = (By.CLASS_NAME, "pp-text")
-    add_card_button = (By.CLASS_NAME, "pp-plus")
-    card_number_field = (By.ID, "number")
-    card_code_field = (By.CSS_SELECTOR, "#code.card-input")
-    link_button = (By.XPATH, "//button[contains(text(), 'Link')]")
-    payment_method_text = (By.CLASS_NAME, "pp-value-text")
-    close_payment_modal = (By.XPATH, "//button[@class='close-button section-close']")
-
     def click_payment_method_button(self):
         self.driver.find_element(*self.payment_method_button).click()
 
@@ -139,34 +142,18 @@ class UrbanRoutesPage:
     def get_payment_method_text(self):
         return self.driver.find_element(*self.payment_method_text).text
 
-    # DRIVER COMMENT LOCATORS
-    comment_field = (By.ID, "comment")
-    checkbox_field = (By.ID, "checked")
-
     def set_message_for_driver(self, message):
         self.driver.find_element(*self.comment_field).send_keys(message)
 
     def get_message_for_driver(self):
         return self.driver.find_element(*self.comment_field).get_attribute("value")
 
-    # Blanket and handkerchiefs locators
-    blanket_and_tissues_switch = (By.CLASS_NAME, "switch")
-    blanket_and_tissues_checkbox = (By.CLASS_NAME, "switch-input")
-
-    # Blanket and handkerchiefs methods
     def click_blanket_and_tissues(self):
         self.driver.find_element(*self.blanket_and_tissues_switch).click()
 
     def get_blanket_checkbox_property(self):
        return self.driver.find_element(*self.blanket_and_tissues_checkbox).get_property('checked')
 
-
-    # Ice cream locators
-    ice_cream_counter_plus = (By.CLASS_NAME, "counter-plus")
-    ice_cream_counter_value = (By.CLASS_NAME, "counter-value")
-    ice_cream_plus_button = (By.XPATH, "//div[@class='counter-plus']")
-
-    # Ice cream methods
     def click_ice_cream_plus(self):
         self.driver.find_element(*self.ice_cream_counter_plus).click()
 
