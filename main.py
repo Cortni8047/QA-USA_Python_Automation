@@ -1,3 +1,5 @@
+import time
+
 import data
 import helpers
 from selenium import webdriver
@@ -48,13 +50,10 @@ class TestUrbanRoutes:
         routes_page.click_phone_number_button()
 
         routes_page.set_phone_number(data.PHONE_NUMBER)
-
-        phone_code = routes_page.retrieve_phone_code()
-
+        routes_page.click_next_button()
+        routes_page.set_confirmation_code()
+        time.sleep(2)
         routes_page.click_confirm_button()
-
-        routes_page.set_confirmation_code(phone_code)
-
         assert routes_page.get_phone_number() == data.PHONE_NUMBER
 
 
@@ -71,7 +70,7 @@ class TestUrbanRoutes:
         routes_page.set_card_code(data.CARD_CODE)
         routes_page.click_link_button()
 
-        assert routes_page.payment_method_text() == 'Card'
+        assert routes_page.get_payment_method_text() == 'Card'
 
     def test_comment_for_driver(self):
         self.driver.get(data.URBAN_ROUTES_URL)
@@ -94,7 +93,7 @@ class TestUrbanRoutes:
         routes_page.click_supportive_tariff()
         routes_page.click_blanket_and_tissues()
 
-        assert routes_page.get_blanket_checkbox_property("checked") == True
+        assert routes_page.get_blanket_checkbox_property()
 
     def test_order_2_ice_creams(self):
         self.driver.get(data.URBAN_ROUTES_URL)
@@ -113,20 +112,11 @@ class TestUrbanRoutes:
         self.driver.get(data.URBAN_ROUTES_URL)
         routes_page = UrbanRoutesPage(self.driver)
         routes_page.set_route(data.ADDRESS_FROM, data.ADDRESS_TO)
-
         routes_page.click_call_taxi_button()
         routes_page.click_supportive_tariff()
-        phone_code = routes_page.retrieve_phone_code()
-
-        routes_page.click_phone_number_button()
-        routes_page.phone_number_field()
-        helpers.retrieve_phone_code()
-        routes_page.set_phone_number()
-        routes_page.click_confirm_button()
-        routes_page.set_confirmation_code(phone_code)
-        routes_page.set_message_for_driver()
+        routes_page.set_full_phone(data.PHONE_NUMBER)
+        routes_page.set_message_for_driver(data.MESSAGE_FOR_DRIVER)
         routes_page.click_order_button()
-
         assert routes_page.is_car_search_modal_displayed()
 
     @classmethod
