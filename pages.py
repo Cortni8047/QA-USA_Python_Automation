@@ -17,7 +17,7 @@ class UrbanRoutesPage:
     from_field = (By.ID, "from")
     to_field = (By.ID, "to")
     call_taxi_button = (By.XPATH, "//button[text()='Call a taxi']")
-    supportive_tariff_button = (By.XPATH, "//div[@class='tcard']")
+    supportive_tariff_button = (By.XPATH, "//div[text()='Supportive']")
     supportive_tariff_selected = (By.XPATH, "//div[@class='tcard active']")
     order_button = (By.CLASS_NAME, "smart-button-wrapper")
 
